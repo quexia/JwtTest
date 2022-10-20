@@ -34,7 +34,7 @@ public class MessageController {
         }
     }
 
-    @LoginToken
+    @LoginToken()
     @PostMapping("/getMessage")
     public String getMessage() {
         return "你已通过验证";

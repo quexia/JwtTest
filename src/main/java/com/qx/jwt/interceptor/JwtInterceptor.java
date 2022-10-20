@@ -10,6 +10,7 @@ import com.qx.jwt.annotation.PassToken;
 import com.qx.jwt.entity.User;
 import com.qx.jwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,11 +29,11 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
-        if (handler instanceof HandlerMethod){
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        HandlerMethod handlerMethod=(HandlerMethod)handler;
-        Method method=handlerMethod.getMethod();
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Method method = handlerMethod.getMethod();
         //检查是否有passtoken注释，有则跳过认证
         if (method.isAnnotationPresent(PassToken.class)) {
             PassToken passToken = method.getAnnotation(PassToken.class);
